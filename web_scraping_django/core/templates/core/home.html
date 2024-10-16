@@ -13,21 +13,18 @@
             background-color: #e7e0e0;
             box-sizing: border-box;
         }
-
         #main {
             text-align: center;
             padding-top: 100px;
             margin: 0 auto;
             max-width: 1000px;
         }
-
         h1 {
             font-size: 2rem;
             margin-bottom: 20px;
             color: rgb(159, 70, 10);
             text-align: center;
         }
-        
         button {
             width: 30%;
             border-radius: 5px;
@@ -37,15 +34,12 @@
             border: 2px solid rgb(159, 70, 10);
             text-transform: uppercase;
         }
-
         button:hover {
             background-color: rgb(122,60,19);
         }
-
         form {
             margin-top: 30px;
         }
-
         input[type='text'] {
             margin-bottom: 10px;
             border-radius: 5px;
@@ -55,19 +49,58 @@
             outline: rgb(144,73,25);
             border: 2px solid rgb(159,70,10);
         }
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+        .product-table th, .product-table td{
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        .product-table th{
+            background-color: #fbd2d2;
+        }
+        .product-table img {
+            max-width: 100 px;
+            height: auto;
+        }
 
     </style>
 </head>
 <body>
     <div id="main">
         <h1>Search for Jumia Products</h1>
-        <form method="get">
+        <form method="GET">
             <div>
-                <label for="search"></label>
-                <input type="text" name="search" id="search" value="{{ request.GET.product }}" placeholder="Search for product">
+                <label for="product"></label>
+                <input type="text" name="product" id="product" value="{{ request.GET.product }}" placeholder="Search for product">
             </div>
-            <button type="submit">Search</button>
+            <button type="submit" value="submit">Search</button>
         </form>
+        {% if products_list_info %}
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Image</th>
+                        <th>Price</th>
+                        <th>Ratings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products_list_info %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td><img src="{{ product.img_url }}" alt="{{ product.name }}" width="100"></td>
+                        <td>{{ product.new_price }}</td>
+                        <td>{{ product.ratings }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
 </body>
 </html>
