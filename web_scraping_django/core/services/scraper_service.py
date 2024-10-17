@@ -60,9 +60,19 @@ class ProductParser(WebScraper):
                 ratings = f'{float(width_value) / 20:.1f}'
             else:
                 ratings = '0.0'
-            product_info = {
-                "img_url": img_url, 'name': name, 'new_price': new_price, 'old_price': old_price,
-                'discount': discount_on_old_price, 'ratings': ratings
-            }
-            return product_info
+            product_instance = Product.objects.create(
+                    name=name,
+                    img_url=img_url,
+                    new_price=new_price,
+                    old_price=old_price,
+                    discount=discount_on_old_price,
+                    ratings=float(ratings)
+                )
+            product_instance.save()  # This will trigger the custom save method
+            return product_instance
+            # product_info = {
+            #     "img_url": img_url, 'name': name, 'new_price': new_price, 'old_price': old_price,
+            #     'discount': discount_on_old_price, 'ratings': ratings
+            # }
+            # return product_info
         return None
