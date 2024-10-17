@@ -63,8 +63,22 @@
             background-color: #fbd2d2;
         }
         .product-table img {
-            max-width: 100 px;
+            max-width: 100px;
             height: auto;
+        }
+        td span {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        del {
+            color: gray;
+            font-size: 1rem;
+        }
+
+        td span.discount {
+            color: green;
+            font-size: 0.9rem;
         }
 
     </style>
@@ -94,7 +108,15 @@
                     <tr>
                         <td>{{ product.name }}</td>
                         <td><img src="{{ product.img_url }}" alt="{{ product.name }}" width="100"></td>
-                        <td>{{ product.new_price }}</td>
+                        <td>
+                            <span>{{ product.new_price }}</span>
+                            {% if product.old_price or product.discount %}
+                                <br>
+                                <del>{{ product.old_price }}</del>
+                                <br>
+                                <span style="color: green;">{{ product.discount }} off</span>
+                            {% endif %}
+                        </td> 
                         <td>{{ product.ratings }}</td>
                     </tr>
                     {% endfor %}
